@@ -15,6 +15,11 @@ app.set('views', './views');
 
 app.use(express.static("public")); // static files
 
+// routes
+auth = require('./controllers/auth');
+
+app.use(auth);
+
 app.get('/', (req, res) => { 
     res.render('home');
 });
