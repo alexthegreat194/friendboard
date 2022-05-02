@@ -6,6 +6,7 @@ A social network for friends to keep track of their finances, share their experi
 ## TODO
 * [ ] Add a login page
 * [ ] Add a signup page
+
 * [ ] Add a profile page
 * [ ] Add a landing page
 
