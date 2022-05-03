@@ -2,6 +2,9 @@ const express = require('express');
 const { engine } = require('express-handlebars');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
+
+const prisma = require('./utils/prisma');
 
 require('dotenv').config();
 
@@ -19,6 +22,33 @@ app.use(express.static("public")); // static files
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.json());
+
+// auth middleware
+app.use((req, res, next) => {
+    if (req.cookies.authToken) {
+        jwt.verify(req.cookies.authToken, process.env.SECRET, (err, decoded) => {
+            if (err) {
+                return res.redirect('/login');
+            }
+            req.userId = decoded.id;
+            next();
+        });
+    }
+    next();
+});
+
+app.use(async (req, res, next) => {
+    res.locals.isAuthenticated = req.cookies.authToken ? true : false;
+    if (res.locals.isAuthenticated) {
+        const user = await prisma.user.findOne({
+            where: {
+                id: req.userId
+            }
+        });
+        res.locals.user = user;
+    }
+    next();
+});
 
 // routes
 auth = require('./controllers/auth');
