@@ -71,8 +71,10 @@ app.use(async (req, res, next) => {
 
 // routes
 auth = require('./controllers/auth');
+profile = require('./controllers/profile');
 
 app.use(auth);
+app.use(profile);
 
 app.get('/', (req, res) => { 
     res.render('home');
