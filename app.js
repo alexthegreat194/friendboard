@@ -24,33 +24,49 @@ app.use(cookieParser());
 app.use(express.json());
 
 // auth middleware
-app.use((req, res, next) => {
-    if (req.cookies.authToken) {
-        jwt.verify(req.cookies.authToken, process.env.SECRET, (err, decoded) => {
+app.use(function authenticateToken(req, res, next) {
+    // Gather the jwt access token from the cookie
+    const token = req.cookies.authToken;
+  
+    if (token) {
+        jwt.verify(token, process.env.SECRET, (err, user) => {
             if (err) {
-                return res.redirect('/login');
-            }
-            req.userId = decoded.id;
-        });
-    }
-    next();
-});
+                console.log(err)
+                // redirect to login if not logged in and trying to access a protected route
+                next();
 
-app.use(async (req, res, next) => {
-    res.locals.isAuthenticated = req.cookies.authToken ? true : false;
-    if (res.locals.isAuthenticated) {
-        const user = await prisma.user.findFirst({
-            where: {
-                id: req.userId
+            } else {
+                req.user = user
+                next(); // pass the execution off to whatever request the client intended
             }
         })
-        .catch(err => {
-            console.log(err);
-            return res.redirect('/login');
-        });
-        res.locals.currentUser = user;
+    } else {
+      next();
     }
-    next();
+});
+  
+app.use(async (req, res, next) => {
+      // if a valid JWT token is present
+    if (req.user) {
+        // Look up the user's record
+        const user = await prisma.user.findFirst({
+            where: {
+                id: req.user.id
+            }
+        })
+        .then(currentUser => {
+            // make the user object available in all controllers and templates
+            res.locals.isAuthenticated = true;
+            res.locals.currentUser = currentUser;
+            next()
+        }).catch(err => {
+            console.log(err)
+            res.locals.isAuthenticated = false;
+        })
+    } else {
+        res.locals.isAuthenticated = false;
+        next();
+    }
 });
 
 // routes
