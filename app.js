@@ -31,7 +31,6 @@ app.use((req, res, next) => {
                 return res.redirect('/login');
             }
             req.userId = decoded.id;
-            next();
         });
     }
     next();
@@ -40,12 +39,16 @@ app.use((req, res, next) => {
 app.use(async (req, res, next) => {
     res.locals.isAuthenticated = req.cookies.authToken ? true : false;
     if (res.locals.isAuthenticated) {
-        const user = await prisma.user.findOne({
+        const user = await prisma.user.findFirst({
             where: {
                 id: req.userId
             }
+        })
+        .catch(err => {
+            console.log(err);
+            return res.redirect('/login');
         });
-        res.locals.user = user;
+        res.locals.currentUser = user;
     }
     next();
 });
