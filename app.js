@@ -1,5 +1,7 @@
 const express = require('express');
 const { engine } = require('express-handlebars');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
 
@@ -14,6 +16,9 @@ app.set('view engine', 'hbs');
 app.set('views', './views');
 
 app.use(express.static("public")); // static files
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.json());
 
 // routes
 auth = require('./controllers/auth');
