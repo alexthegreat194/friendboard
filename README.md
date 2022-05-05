@@ -4,8 +4,8 @@
 A social network for friends to keep track of their finances, share their experiences and schedule events.
 
 ## TODO
-* [ ] Add a login page
-* [ ] Add a signup page
+* [x] Add a login page
+* [x] Add a signup page
 
 * [ ] Add a profile page
 * [ ] Add a landing page

@@ -62,6 +62,7 @@ app.use(async (req, res, next) => {
         }).catch(err => {
             console.log(err)
             res.locals.isAuthenticated = false;
+            next()
         })
     } else {
         res.locals.isAuthenticated = false;
@@ -77,7 +78,9 @@ app.use(auth);
 app.use(profile);
 
 app.get('/', (req, res) => { 
-    res.render('home');
+    res.render('home', {
+        layout: 'one-page'
+    });
 });
 
 const port = process.env.PORT || 3000;

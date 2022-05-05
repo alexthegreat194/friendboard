@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const prisma = require('../utils/prisma')
+const axios = require('axios');
 
 router.get('/profile', async (req, res) => {
     if (!res.locals.currentUser) {
@@ -17,6 +18,8 @@ router.get('/profile', async (req, res) => {
     if (!profile) {
         return res.redirect('/profile/new')
     }
+
+        
 
     res.render('profile', {
         profile
