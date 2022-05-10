@@ -74,10 +74,12 @@ app.use(async (req, res, next) => {
 auth = require('./controllers/auth');
 profile = require('./controllers/profile');
 dashboard = require('./controllers/dashboard');
+group = require('./controllers/group');
 
 app.use(auth);
 app.use(profile);
 app.use(dashboard);
+app.use(group);
 
 app.get('/', (req, res) => { 
     res.render('home', {

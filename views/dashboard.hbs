@@ -42,7 +42,8 @@ Join group:
         {{#each this.profiles}}
             {{name}}
         {{/each}}
-        {{!-- leave button --}}
+        <a href="/group/{{code}}" 
+            class="rounded-xl bg-blue-600 text-white p-3">View</a>
         <a href="/group/leave/{{code}}" 
             class="rounded-xl bg-red-600 text-white p-3">Leave</a>
     {{/each}}
