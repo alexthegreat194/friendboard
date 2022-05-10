@@ -19,8 +19,6 @@ router.get('/profile', async (req, res) => {
         return res.redirect('/profile/new')
     }
 
-        
-
     res.render('profile', {
         profile
     });

@@ -47,7 +47,7 @@ router.post('/signup', async (req, res) => {
     const token = generateToken(user);
     res.cookie('authToken', token);
 
-    res.redirect('/');
+    res.redirect('/dashboard');
 })
 
 router.post('/login', async (req, res) => {
@@ -75,7 +75,7 @@ router.post('/login', async (req, res) => {
     const token = generateToken(user);
     res.cookie('authToken', token);
 
-    res.redirect('/');
+    res.redirect('/dashboard');
 })
 
 router.get('/logout', (req, res) => {

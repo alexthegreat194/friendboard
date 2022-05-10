@@ -16,6 +16,8 @@ model User {
   password String
 
   profile Profile?
+  ownedGroups Group[] @relation(name: "owner")
+  usersInGroups UserInGroup[]
 }
 
 model Profile {
@@ -27,4 +29,24 @@ model Profile {
   
   user User @relation(fields: [userId], references: [id])
   userId Int
+}
+
+model Group {
+  id Int @id @default(autoincrement())
+  name String
+  code String @unique
+
+  ownerId Int
+  owner User @relation(fields: [ownerId], references: [id], name: "owner")
+
+  usersInGroups UserInGroup[]
+}
+
+model UserInGroup {
+  id Int @id @default(autoincrement())
+  userId Int
+  groupId Int
+
+  user User @relation(fields: [userId], references: [id])
+  group Group @relation(fields: [groupId], references: [id])
 }

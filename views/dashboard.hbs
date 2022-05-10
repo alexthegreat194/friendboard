@@ -1,1 +1,49 @@
 <h1>dashboard</h1>
+
+create group: 
+<div class="flex">
+    <form action="/group/new" method="post" 
+        class="border flex flex-col gap-3 p-3">
+        <div class="flex flex-col">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" 
+                class="border rounded p-1" />
+        </div>
+        <div class="flex justify-center">
+            <input type="submit" value="Create" 
+                class="hover:cursor-pointer rounded-xl p-2 bg-blue-500 text-white shadow"/>
+        </div>
+    </form>
+</div>
+
+Join group: 
+<div class="flex">
+    <form action="/group/join" method="post" 
+        class="border flex flex-col gap-3 p-3">
+        <div class="flex flex-col">
+            <label for="code">Invite Code</label>
+            <input type="text" name="code" id="code" 
+                class="border rounded p-1" />
+        </div>
+        <div class="flex justify-center">
+            <input type="submit" value="Create" 
+                class="hover:cursor-pointer rounded-xl p-2 bg-blue-500 text-white shadow"/>
+        </div>
+    </form>
+</div>
+
+{{#if inGroup}}
+
+    {{#each groups}}
+        {{id}}
+        {{code}}
+        {{name}}
+        profiles:
+        {{#each this.profiles}}
+            {{name}},
+        {{/each}}
+    {{/each}}
+
+{{else}}
+not in group
+{{/if}}
