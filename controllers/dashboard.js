@@ -202,7 +202,7 @@ router.get('/group/leave/:code', async (req, res) => {
         }
     });
 
-    console.log(userInGroup);
+    // console.log(userInGroup);
     console.log('user left group: ', req.params.code);
 
     res.redirect('/dashboard');
