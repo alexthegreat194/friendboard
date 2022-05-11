@@ -12,8 +12,12 @@ A social network for friends to keep track of their finances, share their experi
 
 * [x] Add a dashboard page
 * [x] Add a group page
-* [ ] Add a event page
+* [x] Add a event page
 * [ ] Add a financial page
 * [ ] Add a board page
 
 * [ ] Make everything look pretty
+
+## Backlog
+* [ ] Calander 
+* [ ] Make cars a feature of the app 
