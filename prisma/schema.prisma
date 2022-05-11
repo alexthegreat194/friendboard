@@ -18,6 +18,8 @@ model User {
   profile Profile?
   ownedGroups Group[] @relation(name: "owner")
   usersInGroups UserInGroup[]
+  eventsCreated Event[] 
+  eventsAttending EventAttending[] 
 }
 
 model Profile {
@@ -49,4 +51,25 @@ model UserInGroup {
 
   user User @relation(fields: [userId], references: [id])
   group Group @relation(fields: [groupId], references: [id])
+}
+
+model Event {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  date DateTime
+
+  createrId Int
+  creater User @relation(fields: [createrId], references: [id])
+
+  attendees EventAttending[]
+}
+
+model EventAttending {
+  id Int @id @default(autoincrement())
+  eventId Int
+  userId Int
+
+  event Event @relation(fields: [eventId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }

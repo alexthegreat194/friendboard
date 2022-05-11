@@ -7,10 +7,13 @@ A social network for friends to keep track of their finances, share their experi
 * [x] Add a login page
 * [x] Add a signup page
 
-* [ ] Add a profile page
-* [ ] Add a landing page
+* [x] Add a profile page
+* [x] Add a landing page
 
-* [ ] Add a board page
-* [ ] Add a group page
+* [x] Add a dashboard page
+* [x] Add a group page
 * [ ] Add a event page
 * [ ] Add a financial page
+* [ ] Add a board page
+
+* [ ] Make everything look pretty
