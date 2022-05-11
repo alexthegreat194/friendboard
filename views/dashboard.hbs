@@ -35,17 +35,28 @@ Join group:
 {{#if inGroup}}
 
     {{#each groups}}
-        {{id}}
-        {{code}}
-        {{name}}
-        profiles: 
-        {{#each this.profiles}}
-            {{name}}
-        {{/each}}
-        <a href="/group/{{code}}" 
-            class="rounded-xl bg-blue-600 text-white p-3">View</a>
-        <a href="/group/leave/{{code}}" 
-            class="rounded-xl bg-red-600 text-white p-3">Leave</a>
+        <div class="border rounded p-3">
+            <h1>Name: {{name}}</h1>
+            <h3>Code: {{code}}</h3>
+            <ul>
+                {{#each this.profiles}}
+                    <li>{{name}}</li>
+                {{/each}}
+            </ul>
+            <div class="flex m-3">
+                <a href="/group/{{id}}" 
+                    class="rounded-xl bg-blue-600 text-white p-3">View</a>
+
+                {{#if isOwner}}
+                <a href="/group/{{id}}/delete" 
+                    class="rounded-xl bg-red-600 text-white p-3">Delete</a>
+                {{else}}
+                <a href="/group/{{id}}/leave" 
+                    class="rounded-xl bg-red-600 text-white p-3">Leave</a>
+                {{/if}}
+            </div>
+        </div>
+
     {{/each}}
 
 {{else}}

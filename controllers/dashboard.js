@@ -64,9 +64,11 @@ router.get('/dashboard', async (req, res) => {
         group.usersInGroups.map(userInGroup => {
             group.profiles.push(userInGroup.user.profile);
         });
+
+        group.isOwner = group.owner.id == res.locals.currentUser.id;
     });
 
-    console.log(groups);
+    // console.log(groups);
 
     res.render('dashboard', {
         groups, inGroup
@@ -169,12 +171,12 @@ router.post('/group/join', async (req, res) => {
 });
 
 // leave group
-router.get('/group/leave/:code', async (req, res) => {
+router.get('/group/:id/leave', async (req, res) => {
     req.params.code = req.params.code.toLowerCase();
 
     const group = await prisma.group.findFirst({
         where: {
-            code: req.params.code
+            id: req.params.id
         }
     });
 
@@ -207,5 +209,44 @@ router.get('/group/leave/:code', async (req, res) => {
 
     res.redirect('/dashboard');
 });
+
+router.get('/group/:id/delete', async (req, res) => {
+
+    const groupId = parseInt(req.params.id);
+
+    const group = await prisma.group.findFirst({
+        where: {
+            id: groupId
+        }
+    });
+
+    if (!group) {
+        console.log('no group');
+        return res.redirect('/dashboard');
+    }
+
+    if (group.ownerId != res.locals.currentUser.id) {
+        console.log('not owner');
+        return res.redirect('/dashboard');
+    }
+
+    await prisma.userInGroup.deleteMany({
+        where: {
+            groupId: groupId
+        }
+    });
+
+    await prisma.group.delete({
+        where: {
+            id: group.id
+        }
+    });
+
+    console.log('group deleted: ', req.params.code);
+
+    res.redirect('/dashboard');
+
+});
+
 
 module.exports = router
