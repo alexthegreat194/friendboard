@@ -52,6 +52,9 @@ app.use(async (req, res, next) => {
         const user = await prisma.user.findFirst({
             where: {
                 id: req.user.id
+            },
+            include: {
+                profile: true
             }
         })
         .then(currentUser => {
