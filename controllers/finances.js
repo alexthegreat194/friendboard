@@ -138,4 +138,46 @@ router.get('/group/:id/shoppinglist/:listId/item/:itemId/delete', async (req, re
     res.redirect(`/group/${groupId}`)
 });
 
+router.get('/group/:id/shoppinglist/:listId/delete', async (req, res) => {
+    const groupId = parseInt(req.params.id);
+    const listId = parseInt(req.params.listId);
+
+    const group = await prisma.group.findFirst({
+        where: {
+            id: groupId
+        }
+    });
+
+    if (!group) {
+        console.log('no group');
+        return res.redirect('/dashboard');
+    }
+
+    const shoppingList = await prisma.shoppingList.findFirst({
+        where: {
+            id: listId
+        }
+    });
+
+    if (!shoppingList) {
+        console.log('no shopping list');
+        return res.redirect(`/group/${groupId}`)
+    }
+
+    await prisma.shoppingListItem.deleteMany({
+        where: {
+            shoppingListId: listId
+        }
+    });
+
+    await prisma.shoppingList.delete({
+        where: {
+            id: listId
+        }
+    });
+
+    console.log('list deleted')
+
+    res.redirect(`/group/${groupId}`)
+});
 module.exports = router;

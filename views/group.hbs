@@ -4,49 +4,75 @@
     owner: {{owner.profile.name}}
 
     <div class="w-1/2">
-        <form action="/group/{{id}}/events/new" method="post" 
-            class="flex flex-col gap-4 p-5">
-            
-            <div class="flex flex-col">
-                <label for="name">Name</label>
-                <input type="text" name="name" id="name"
-                    class="border rounded p-1" />
-            </div>
-
-            <div class="flex flex-col">
-                <label for="description">Description</label>
-                <input type="text" name="description" id="description"
-                    class="border rounded p-1" />
-            </div>
-
-            <div class="flex flex-col">
-                <label for="date">Date</label>
-                <input type="datetime-local" name="date" id="date"
-                    class="border rounded p-1" />
-            </div>
-
-            <input type="submit" value="Create Event" 
-                class="rounded-xl bg-blue-600 text-white p-3 
-                hover:bg-blue-700 hover:cursor-pointer transition-colors"/>
-        </form>
+        <button id="new-event" class="btn btn-success new-event-button">
+            New Event
+        </button>
+        <div id="new-event-form" class="hidden">
+            <form action="/group/{{id}}/events/new" method="post" 
+                class="flex flex-col gap-4 p-5">
+                
+                <div class="flex flex-col">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name"
+                        class="border rounded p-1" />
+                </div>
+    
+                <div class="flex flex-col">
+                    <label for="description">Description</label>
+                    <input type="text" name="description" id="description"
+                        class="border rounded p-1" />
+                </div>
+    
+                <div class="flex flex-col">
+                    <label for="date">Date</label>
+                    <input type="datetime-local" name="date" id="date"
+                        class="border rounded p-1" />
+                </div>
+    
+                <input type="submit" value="Create Event" 
+                    class="rounded-xl bg-blue-600 text-white p-3 
+                    hover:bg-blue-700 hover:cursor-pointer transition-colors"/>
+            </form>
+        </div>
+        <script>
+            document.getElementById('new-event').addEventListener('click', function() {
+                const newEventForm = document.getElementById('new-event-form');
+                newEventForm.classList.toggle('hidden');
+            });
+        </script>
+        
     </div>
 
-    <h1>Shopping Lists</h1>
-    <div class="w-1/2 border p-1 rounded">
-        <h1>New List</h1>
-        <form action="/group/{{id}}/shoppinglist/new" method="post"
-            class="flex flex-col gap-4 p-5">
-            <div class="flex flex-col">
-                <label for="name">Name</label>
-                <input type="text" name="name" id="name"
-                    class="border rounded p-1" />
+    <div class="">
+        <button id="new-shopping-list" class="btn btn-success new-list-button">
+            New Shopping List
+        </button>
+        <div id="new-shopping-list-form" class="hidden">
+            <h1>Shopping Lists</h1>
+            <div class="w-1/2 border p-1 rounded">
+                <h1>New List</h1>
+                <form action="/group/{{id}}/shoppinglist/new" method="post"
+                    class="flex flex-col gap-4 p-5">
+                    <div class="flex flex-col">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name"
+                            class="border rounded p-1" />
+                    </div>
+                    
+                    <input type="submit" value="Create List"
+                        class="rounded-xl bg-blue-600 text-white p-3
+                        hover:bg-blue-700 hover:cursor-pointer transition-colors"/>
+                </form>
             </div>
-            
-            <input type="submit" value="Create List"
-                class="rounded-xl bg-blue-600 text-white p-3
-                hover:bg-blue-700 hover:cursor-pointer transition-colors"/>
-        </form>
+        </div>
+        <script>
+            document.getElementById('new-shopping-list').addEventListener('click', function() {
+                document.getElementById('new-shopping-list-form').classList.toggle('hidden');
+            });
+        </script>
+
     </div>
+
 {{/with}}
 
 {{#if shoppingLists}}
@@ -56,6 +82,8 @@
             {{#each shoppingLists}}
                 <div class="w-1/2 border rounded">
                     <h1>{{name}}</h1>
+                    <a href="/group/{{groupId}}/shoppinglist/{{id}}/delete"
+                        class="btn btn-danger">Delete</a>
                     <table class="table-auto">
                         <thead>
                             <tr>

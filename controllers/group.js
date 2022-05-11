@@ -115,8 +115,6 @@ router.get('/group/:id', async (req, res) => {
         }
     });
 
-    console.table(shoppingLists[0].items)
-
     res.render('group', {
         group, events, shoppingLists
     });

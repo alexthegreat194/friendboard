@@ -14,7 +14,7 @@ A social network for friends to keep track of their finances, share their experi
 * [x] Add a group page
 * [x] Add a event page
 * [ ] Add a financial page
-    * [ ] Shopping List
+    * [x] Shopping List
     * [ ] Big Goals
 * [ ] Add a board page
     * [ ] manage quotes
