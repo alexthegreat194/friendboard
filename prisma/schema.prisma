@@ -20,6 +20,8 @@ model User {
   usersInGroups UserInGroup[]
   eventsCreated Event[] 
   eventsAttending EventAttending[] 
+  shoppingLists ShoppingList[]
+  shoppingListItems ShoppingListItem[]
 }
 
 model Profile {
@@ -43,6 +45,8 @@ model Group {
 
   usersInGroups UserInGroup[]
   eventsCreated Event[]
+  shoppingList ShoppingList[]
+  shoppingListItems ShoppingListItem[]
 }
 
 model UserInGroup {
@@ -76,4 +80,32 @@ model EventAttending {
 
   event Event @relation(fields: [eventId], references: [id])
   user User @relation(fields: [userId], references: [id])
+}
+
+model ShoppingListItem {
+  id Int @id @default(autoincrement())
+  name String
+  quantity Int
+  
+  groupId Int
+  group Group @relation(fields: [groupId], references: [id])
+
+  creatorId Int
+  creator User @relation(fields: [creatorId], references: [id])
+
+  shoppingListId Int
+  shoppingList ShoppingList @relation(fields: [shoppingListId], references: [id])
+}
+
+model ShoppingList {
+  id Int @id @default(autoincrement())
+  name String
+
+  creatorId Int
+  creator User @relation(fields: [creatorId], references: [id])
+
+  groupId Int
+  group Group @relation(fields: [groupId], references: [id])
+
+  items ShoppingListItem[]
 }

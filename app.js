@@ -78,11 +78,13 @@ auth = require('./controllers/auth');
 profile = require('./controllers/profile');
 dashboard = require('./controllers/dashboard');
 group = require('./controllers/group');
+finances = require('./controllers/finances');
 
 app.use(auth);
 app.use(profile);
 app.use(dashboard);
 app.use(group);
+app.use(finances);
 
 app.get('/', (req, res) => { 
     res.render('home', {

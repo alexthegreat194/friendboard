@@ -14,10 +14,15 @@ A social network for friends to keep track of their finances, share their experi
 * [x] Add a group page
 * [x] Add a event page
 * [ ] Add a financial page
+    * [ ] Shopping List
+    * [ ] Big Goals
 * [ ] Add a board page
+    * [ ] manage quotes
+    * [ ] manage visualization
 
 * [ ] Make everything look pretty
 
 ## Backlog
 * [ ] Calander 
 * [ ] Make cars a feature of the app 
+* [ ] IOU stuff

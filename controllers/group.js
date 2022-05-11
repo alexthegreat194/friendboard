@@ -90,10 +90,35 @@ router.get('/group/:id', async (req, res) => {
         });
     });
 
-    console.log(events)
+    // console.log(events)
+
+    const shoppingLists = await prisma.shoppingList.findMany({
+        where: {
+            groupId: group.id
+        },
+        include: {
+            group: true,
+            creator: {
+                include: {
+                    profile: true
+                }
+            },
+            items: {
+                include: {
+                    creator: {
+                        include: {
+                            profile: true
+                        }
+                    }
+                },
+            }
+        }
+    });
+
+    console.table(shoppingLists[0].items)
 
     res.render('group', {
-        group, events
+        group, events, shoppingLists
     });
 
 });

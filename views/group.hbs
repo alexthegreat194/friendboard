@@ -3,7 +3,6 @@
     {{code}}
     owner: {{owner.profile.name}}
 
-
     <div class="w-1/2">
         <form action="/group/{{id}}/events/new" method="post" 
             class="flex flex-col gap-4 p-5">
@@ -32,43 +31,114 @@
         </form>
     </div>
 
+    <h1>Shopping Lists</h1>
+    <div class="w-1/2 border p-1 rounded">
+        <h1>New List</h1>
+        <form action="/group/{{id}}/shoppinglist/new" method="post"
+            class="flex flex-col gap-4 p-5">
+            <div class="flex flex-col">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name"
+                    class="border rounded p-1" />
+            </div>
+            
+            <input type="submit" value="Create List"
+                class="rounded-xl bg-blue-600 text-white p-3
+                hover:bg-blue-700 hover:cursor-pointer transition-colors"/>
+        </form>
+    </div>
 {{/with}}
+
+{{#if shoppingLists}}
+    <div>
+        <h1>Shopping Lists</h1>
+        <div>
+            {{#each shoppingLists}}
+                <div class="w-1/2 border rounded">
+                    <h1>{{name}}</h1>
+                    <table class="table-auto">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each items}}
+                                <tr>
+                                    <td>{{name}}</td>
+                                    <td>{{quantity}}</td>
+                                    <td class="p-5"><a href="/group/{{groupId}}/shoppinglist/{{shoppingListId}}/item/{{id}}/delete"
+                                        class="btn btn-danger">
+                                        Delete
+                                    </a></td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <form action="/group/{{group.id}}/shoppinglist/{{id}}/item/new" method="post"
+                        class="flex flex-col gap-4 p-5">
+                        <div class="flex flex-col">
+                            <label for="name"
+                                class="">Name</label>
+                            <input type="text" name="name" id="name"
+                                class="border rounded p-1" />
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="amount"
+                                class="">Amount</label>
+                            <input type="number" name="amount" id="amount"
+                                class="border rounded p-1" />
+                        </div>
+                        <input type="submit" value="Submit"
+                            class="btn btn-success">
+                    </form>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+{{else}}
+    <h1>No Shopping Lists</h1>
+{{/if}}
 
 {{#if events}}
 
     events
-    {{#each events}}
-        <div class="border rounded p-3">
-            <h1 class="text-xl font-bold">{{name}}</h1>
-            <h3 class="text-md font-light">{{description}}</h3>
-            <h3 class="text-md font-light">{{date}}</h3>
-            <h3>Creator: {{creator.profile.name}}</h3>
-
-            <div class="">
-                <h1>people attending:</h1>
-                {{#each profiles}}
-                    <h3>{{name}}</h3>                    
-                {{/each}}
-            </div>
-
-            <div class="flex m-3">
-                <a href="/group/{{id}}/events/{{id}}"
-                    class="rounded-xl bg-blue-600 text-white p-3">View</a>
-                {{#if isOwner}}
-                <a href="/group/{{group.id}}/events/{{id}}/delete" 
-                    class="rounded-xl bg-red-600 text-white p-3">Delete</a>
-                {{else}}
-                    {{#if isAttending}}
-                        <a href="/group/{{group.id}}/events/{{id}}/leave" 
-                            class="rounded-xl bg-red-600 text-white p-3">Leave</a>
+    <div class="grid grid-rows-2">
+        {{#each events}}
+            <div class="border rounded p-3">
+                <h1 class="text-xl font-bold">{{name}}</h1>
+                <h3 class="text-md font-light">{{description}}</h3>
+                <h3 class="text-md font-light">{{date}}</h3>
+                <h3>Creator: {{creator.profile.name}}</h3>
+    
+                <div class="">
+                    <h1>people attending:</h1>
+                    {{#each profiles}}
+                        <h3>{{name}}</h3>                    
+                    {{/each}}
+                </div>
+    
+                <div class="flex m-3">
+                    <a href="/group/{{id}}/events/{{id}}"
+                        class="rounded-xl bg-blue-600 text-white p-3">View</a>
+                    {{#if isOwner}}
+                    <a href="/group/{{group.id}}/events/{{id}}/delete" 
+                        class="rounded-xl bg-red-600 text-white p-3">Delete</a>
                     {{else}}
-                        <a href="/group/{{group.id}}/events/{{id}}/join" 
-                            class="rounded-xl bg-blue-600 text-white p-3">Join</a>
+                        {{#if isAttending}}
+                            <a href="/group/{{group.id}}/events/{{id}}/leave" 
+                                class="rounded-xl bg-red-600 text-white p-3">Leave</a>
+                        {{else}}
+                            <a href="/group/{{group.id}}/events/{{id}}/join" 
+                                class="rounded-xl bg-blue-600 text-white p-3">Join</a>
+                        {{/if}}
                     {{/if}}
-                {{/if}}
+                </div>
             </div>
-        </div>
-    {{/each}}
+        {{/each}}
+    </div>
 
 {{else}}
     no events
