@@ -80,12 +80,13 @@ router.get('/group/:id', async (req, res) => {
 
     events.map(event => {
         event.isOwner = event.creator.id == res.locals.currentUser.id;
-        event.isAttending = event.attendees.some(attendee => {
-            return attendee.id == res.locals.currentUser.id;
-        });
         event.profiles = [];
+        event.isAttending = false;
         event.attendees.map(attendee => {
             event.profiles.push(attendee.user.profile);
+            if (attendee.user.id == res.locals.currentUser.id){
+                event.isAttending = true;
+            }
         });
     });
 
@@ -197,11 +198,10 @@ router.get('/group/:id/events/:eventId/join', async (req, res) => {
         }
     });
 
-    if (eventAttending) {
+    if (eventAttendingCheck) {
         console.log('user already attending')
         return res.redirect(`/group/${groupId}`)
     }
-
 
     const eventAttending = await prisma.eventAttending.create({
         data: {
@@ -214,5 +214,46 @@ router.get('/group/:id/events/:eventId/join', async (req, res) => {
 
     res.redirect(`/group/${groupId}`)
 });
+
+router.get('/group/:id/events/:eventId/leave', async (req, res) => {
+
+    const groupId = parseInt(req.params.id);
+    const eventId = parseInt(req.params.eventId);
+
+    const event = await prisma.event.findFirst({
+        where: {
+            id: eventId
+        }
+    });
+
+    if (!event) {
+        console.log('event not found')
+        return res.redirect(`/group/${groupId}`)
+    }
+
+    // check to see if user is already attending
+    const eventAttending = await prisma.eventAttending.findFirst({
+        where: {
+            eventId: eventId,
+            userId: res.locals.currentUser.id
+        }
+    });
+
+    if (!eventAttending) {
+        console.log('user not attending')
+        return res.redirect(`/group/${groupId}`)
+    }
+
+    await prisma.eventAttending.delete({
+        where: {
+            id: eventAttending.id
+        }
+    });
+
+    console.log('removed user from event')
+
+    res.redirect(`/group/${groupId}`)
+});
+
 
 module.exports = router;

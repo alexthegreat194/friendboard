@@ -39,15 +39,23 @@
     events
     {{#each events}}
         <div class="border rounded p-3">
-            <h1>{{name}}</h1>
-            <h3>{{description}}</h3>
-            <h3>{{date}}</h3>
+            <h1 class="text-xl font-bold">{{name}}</h1>
+            <h3 class="text-md font-light">{{description}}</h3>
+            <h3 class="text-md font-light">{{date}}</h3>
             <h3>Creator: {{creator.profile.name}}</h3>
+
+            <div class="">
+                <h1>people attending:</h1>
+                {{#each profiles}}
+                    <h3>{{name}}</h3>                    
+                {{/each}}
+            </div>
+
             <div class="flex m-3">
                 <a href="/group/{{id}}/events/{{id}}"
                     class="rounded-xl bg-blue-600 text-white p-3">View</a>
                 {{#if isOwner}}
-                <a href="/group/{{id}}/delete" 
+                <a href="/group/{{group.id}}/events/{{id}}/delete" 
                     class="rounded-xl bg-red-600 text-white p-3">Delete</a>
                 {{else}}
                     {{#if isAttending}}
