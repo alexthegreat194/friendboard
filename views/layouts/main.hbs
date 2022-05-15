@@ -8,22 +8,57 @@
     <title>Website</title>
 </head>
 <body style="width: 100%; height: 100vh;" class="">
-    <nav>
-        <ul class="flex bg-gray-400 text-2xl p-3 gap-5">
-            <li><a href="/">Home</a></li>
+    <nav class="
+    relative
+    w-full
+    flex flex-wrap
+    items-center
+    justify-between
+    py-4
+    bg-gray-100
+    text-gray-500
+    hover:text-gray-700
+    focus:text-gray-700
+    shadow-lg
+    navbar navbar-expand-lg navbar-light
+    ">
+        <div class="container-fluid w-full flex flex-wrap items-center justify-between px-6">
+        
+            <div class="collapse navbar-collapse flex-grow items-center" id="navbarSupportedContent">
+                <a class="text-xl text-black" href="#">FriendBoard</a>
+                <ul class="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
+                    <li class="nav-item px-2">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
 
-            {{#if isAuthenticated}}
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/profile">Profile</a></li>
-                <li><a href="/logout">Logout</a></li>
-                <li>{{currentUser.profile.name}}</li>
-            {{else}}
-                <li><a href="/login">Login</a></li>
-                <li><a href="/signup">Signup</a></li>
-            {{/if}}
-
-        </ul>
+                    {{#if isAuthenticated}}
+                        <li class="nav-item pr-2">
+                            <a class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" 
+                                href="/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item pr-2">
+                            <a class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" 
+                                href="/profile">Profile</a>
+                        </li>
+                        <li class="nav-item pr-2">
+                            <a class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" 
+                                href="#">Logout</a>
+                        </li>
+                    {{else}}
+                        <li class="nav-item pr-2">
+                            <a class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" 
+                                href="/login">Login</a>
+                        </li>
+                        <li class="nav-item pr-2">
+                            <a class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" 
+                                href="/signup">Signup</a>
+                        </li>
+                    {{/if}}
+                </ul>
+            </div>
+        </div>
     </nav>
     {{{body}}}
+    <script src="/index.min.js"></script>
 </body>
 </html>

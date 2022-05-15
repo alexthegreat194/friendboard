@@ -125,7 +125,7 @@ model GroupGoal {
   creatorId Int
   creator User @relation(fields: [creatorId], references: [id])
 
-  cotributions GroupGoalContribution[]
+  contributions GroupGoalContribution[]
 }
 
 model GroupGoalContribution {

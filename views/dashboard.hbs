@@ -1,60 +1,128 @@
-<h1>dashboard</h1>
+<div class="p-10 shadow mb-4 bg-gray-100">
+    <div class="flex flex-col mb-3">
+        <h1 class="text-3xl font-bold">Dashboard</h1>
+        <h5 class="text-md font-thin">View all the groups that you are apart of</h5>
+    </div>
+    
+    <div class="flex">
+        <button href="" class="btn btn-success" 
+            data-bs-toggle="modal" data-bs-target="#groupModal"> 
+            Create Group
+        </button>
+        
+        <button href="" class="btn btn-success" 
+            data-bs-toggle="modal" data-bs-target="#groupJoinModal"> 
+            Join Group
+        </button>
+    </div>
+</div>
 
-create group: 
-<div class="flex">
-    <form action="/group/new" method="post" 
-        class="border flex flex-col gap-3 p-3">
-        <div class="flex flex-col">
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" 
-                class="border rounded p-1" />
-        </div>
-        <div class="flex justify-center">
+<!-- Modal -->
+<div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+  id="groupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog relative w-auto pointer-events-none">
+    <div
+      class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+      <div
+        class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+        <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">
+          New Group
+        </h5>
+        <button type="button"
+          class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+          data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body relative p-4">
+        
+        <form action="/group/new" method="post" 
+            class="flex flex-col gap-3 p-3">
+            <div class="flex flex-col">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" 
+                    class="border rounded p-1" />
+            </div>
+            
             <input type="submit" value="Create" 
                 class="hover:cursor-pointer rounded-xl p-2 bg-blue-500 text-white shadow"/>
-        </div>
-    </form>
+            
+        </form>
+        
+      </div>
+    </div>
+  </div>
 </div>
 
-Join group: 
-<div class="flex">
-    <form action="/group/join" method="post" 
-        class="border flex flex-col gap-3 p-3">
-        <div class="flex flex-col">
-            <label for="code">Invite Code</label>
-            <input type="text" name="code" id="code" 
-                class="border rounded p-1" />
-        </div>
-        <div class="flex justify-center">
+<!-- Modal -->
+<div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+  id="groupJoinModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog relative w-auto pointer-events-none">
+    <div
+      class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+      <div
+        class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+        <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">
+          Join Group
+        </h5>
+        <button type="button"
+          class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+          data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body relative p-4">
+        
+        <form action="/group/join" method="post" 
+            class="flex flex-col gap-3 p-3">
+            <div class="flex flex-col">
+                <label for="code">Invite Code</label>
+                <input type="text" name="code" id="code" 
+                    class="border rounded p-1" />
+            </div>
+            
             <input type="submit" value="Join" 
                 class="hover:cursor-pointer rounded-xl p-2 bg-blue-500 text-white shadow"/>
-        </div>
-    </form>
+            
+        </form>
+        
+      </div>
+    </div>
+  </div>
 </div>
+
 
 {{#if inGroup}}
 
-    <div >
+    <div class="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {{#each groups}}
-            <div class="border rounded p-3">
-                <h1>Name: {{name}}</h1>
-                <h3>Code: {{code}}</h3>
-                <ul>
-                    {{#each this.profiles}}
-                        <li>{{name}}</li>
-                    {{/each}}
-                </ul>
-                <div class="flex m-3">
-                    <a href="/group/{{id}}" 
-                        class="rounded-xl bg-blue-600 text-white p-3">View</a>
-    
-                    {{#if isOwner}}
-                    <a href="/group/{{id}}/delete" 
-                        class="rounded-xl bg-red-600 text-white p-3">Delete</a>
-                    {{else}}
-                    <a href="/group/{{id}}/leave" 
-                        class="rounded-xl bg-red-600 text-white p-3">Leave</a>
-                    {{/if}}
+            <div class="flex justify-center">
+                <div class="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+                    <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">
+                        {{name}}
+                    </h5>
+                    <p class="text-gray-700 text-base mb-4">
+                        Use code {{code}} to join this group.
+                    </p>
+                    <div class="flex ">
+                        <a href="/group/{{id}}">
+                            <button class="btn btn-success">
+                                View
+                            </button>
+                        </a>
+        
+                        {{#if isOwner}}
+                        <a href="/group/{{id}}/delete">
+                            <button class="btn btn-danger">
+                                Delete
+                            </button>
+                        </a>
+                        {{else}}
+                        <a href="/group/{{id}}/leave">
+                            <button class="btn btn-danger">
+                                Leave
+                            </button>
+                        </a>
+                        {{/if}}
+                    </div>
                 </div>
             </div>
         {{/each}}
@@ -64,5 +132,3 @@ Join group:
 not in group
 {{/if}}
 
-<a href="" 
-    class="btn btn-success"> button</a>

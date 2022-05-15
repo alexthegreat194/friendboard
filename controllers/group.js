@@ -115,8 +115,31 @@ router.get('/group/:id', async (req, res) => {
         }
     });
 
+    const groupGoals = await prisma.groupGoal.findMany({
+        where: {
+            groupId: group.id
+        },
+        include: {
+            group: true,
+            creator: {
+                include: {
+                    profile: true
+                }
+            },
+            contributions: {
+                include: {
+                    user: {
+                        include: {
+                            profile: true
+                        }
+                    }
+                },
+            }
+        }
+    });
+
     res.render('group', {
-        group, events, shoppingLists
+        group, events, shoppingLists, goals: groupGoals
     });
 
 });

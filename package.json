@@ -29,7 +29,8 @@
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.16",
     "prisma": "^3.13.0",
-    "referral-code-generator": "^1.0.8"
+    "referral-code-generator": "^1.0.8",
+    "tw-elements": "^1.0.0-alpha12"
   },
   "devDependencies": {
     "tailwindcss": "^3.0.24"

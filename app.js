@@ -88,7 +88,7 @@ app.use(finances);
 
 app.get('/', (req, res) => { 
     res.render('home', {
-        layout: 'one-page'
+        
     });
 });
 

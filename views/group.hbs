@@ -1,79 +1,171 @@
 {{#with group}}
 
-    {{code}}
-    owner: {{owner.profile.name}}
-
-    <div class="w-1/2">
-        <button id="new-event" class="btn btn-success new-event-button">
-            New Event
-        </button>
-        <div id="new-event-form" class="hidden">
-            <form action="/group/{{id}}/events/new" method="post" 
-                class="flex flex-col gap-4 p-5">
-                
-                <div class="flex flex-col">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" id="name"
-                        class="border rounded p-1" />
-                </div>
-    
-                <div class="flex flex-col">
-                    <label for="description">Description</label>
-                    <input type="text" name="description" id="description"
-                        class="border rounded p-1" />
-                </div>
-    
-                <div class="flex flex-col">
-                    <label for="date">Date</label>
-                    <input type="datetime-local" name="date" id="date"
-                        class="border rounded p-1" />
-                </div>
-    
-                <input type="submit" value="Create Event" 
-                    class="rounded-xl bg-blue-600 text-white p-3 
-                    hover:bg-blue-700 hover:cursor-pointer transition-colors"/>
-            </form>
+    <div class="p-10 shadow mb-4 bg-gray-100">
+        <div class="flex flex-col mb-3">
+            <h1 class="text-3xl font-bold">{{name}}</h1>
+            <h3 class="text-md font-thin">Created by <span class="font-semibold">{{owner.profile.name}}</span></h3>
+            <h5 class="text-md font-thin">Use code <span class="font-semibold">{{code}}</span> to join the group</h5>
         </div>
-        <script>
-            document.getElementById('new-event').addEventListener('click', function() {
-                const newEventForm = document.getElementById('new-event-form');
-                newEventForm.classList.toggle('hidden');
-            });
-        </script>
-        
+        <div class="flex">
+            <button id="new-event" class="btn btn-success new-event-button"
+                data-bs-toggle="modal" data-bs-target="#eventModal">
+                New Event
+            </button>
+
+            <button href="" class="btn btn-success" 
+                data-bs-toggle="modal" data-bs-target="#listModal"> 
+                New Shopping List
+            </button>
+
+            <button href="" class="btn btn-success" 
+                data-bs-toggle="modal" data-bs-target="#goalModal"> 
+                New Group Goal 
+            </button>
+        </div>
     </div>
 
-    <div class="">
-        <button id="new-shopping-list" class="btn btn-success new-list-button">
-            New Shopping List
-        </button>
-        <div id="new-shopping-list-form" class="hidden">
-            <h1>Shopping Lists</h1>
-            <div class="w-1/2 border p-1 rounded">
-                <h1>New List</h1>
-                <form action="/group/{{id}}/shoppinglist/new" method="post"
-                    class="flex flex-col gap-4 p-5">
-                    <div class="flex flex-col">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" id="name"
-                            class="border rounded p-1" />
-                    </div>
-                    
-                    <input type="submit" value="Create List"
-                        class="rounded-xl bg-blue-600 text-white p-3
-                        hover:bg-blue-700 hover:cursor-pointer transition-colors"/>
-                </form>
+    
+
+
+    <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+    id="eventModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog relative w-auto pointer-events-none">
+            <div
+                class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+                <div
+                    class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                    <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">
+                    New Event
+                    </h5>
+                    <button type="button"
+                    class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body relative p-4">
+                    <form action="/group/{{id}}/events/new" method="post" 
+                        class="flex flex-col gap-4 p-5">
+                        
+                        <div class="flex flex-col">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name"
+                                class="border rounded p-1" />
+                        </div>
+            
+                        <div class="flex flex-col">
+                            <label for="description">Description</label>
+                            <input type="text" name="description" id="description"
+                                class="border rounded p-1" />
+                        </div>
+            
+                        <div class="flex flex-col">
+                            <label for="date">Date</label>
+                            <input type="datetime-local" name="date" id="date"
+                                class="border rounded p-1" />
+                        </div>
+            
+                        <input type="submit" value="Create Event" 
+                            class="rounded-xl bg-blue-600 text-white p-3 
+                            hover:bg-blue-700 hover:cursor-pointer transition-colors"/>
+                    </form>
+                </div>
             </div>
         </div>
-        <script>
-            document.getElementById('new-shopping-list').addEventListener('click', function() {
-                document.getElementById('new-shopping-list-form').classList.toggle('hidden');
-            });
-        </script>
-
     </div>
 
+    
+    <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+    id="listModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog relative w-auto pointer-events-none">
+            <div
+            class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+                <div
+                    class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                    <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">
+                    Shopping List
+                    </h5>
+                    <button type="button"
+                    class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body relative p-4">
+                    <form action="/group/{{id}}/shoppinglist/new" method="post"
+                        class="flex flex-col gap-4 p-5">
+                        <div class="flex flex-col">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name"
+                                class="border rounded p-1" />
+                        </div>
+                        
+                        <input type="submit" value="Create List"
+                            class="rounded-xl bg-blue-600 text-white p-3
+                            hover:bg-blue-700 hover:cursor-pointer transition-colors"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+    id="goalModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog relative w-auto pointer-events-none">
+            <div class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+                <div
+                    class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                    <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">
+                        New Group Goal
+                    </h5>
+                    <button type="button"
+                    class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body relative p-4">
+                    <form action="/group/{{id}}/goal/new" method="post"
+                        class="flex flex-col gap-4 p-5">
+
+                        <div class="flex flex-col">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name"
+                                class="border rounded p-1" />
+                        </div>
+                        
+                        <div class="flex flex-col">
+                            <label for="cost">Cost</label>
+                            <input type="number" name="cost" id="cost"
+                                class="border rounded p-1" />
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="name">Description</label>
+                            <textarea name="description" id="description" cols="30" rows="2" 
+                                class="border rounded p-1" /> </textarea>
+                        </div>
+                        
+                        <input type="submit" value="Create Goal"
+                            class="rounded-xl bg-blue-600 text-white p-3
+                            hover:bg-blue-700 hover:cursor-pointer transition-colors"/>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
 {{/with}}
+
+{{#if goals}}
+    <h1>Goals</h1>
+    <ul>
+        {{#each goals}}
+            <li>{{this.name}}</li>
+        {{/each}}
+    </ul>
+{{else}}
+    <h1>No Goals</h1>
+{{/if}}
 
 {{#if shoppingLists}}
     <div>
@@ -97,10 +189,12 @@
                                 <tr>
                                     <td>{{name}}</td>
                                     <td>{{quantity}}</td>
-                                    <td class="p-5"><a href="/group/{{groupId}}/shoppinglist/{{shoppingListId}}/item/{{id}}/delete"
-                                        class="btn btn-danger">
-                                        Delete
-                                    </a></td>
+                                    <td class="p-5">
+                                        <a href="/group/{{groupId}}/shoppinglist/{{shoppingListId}}/item/{{id}}/delete"
+                                            class="btn btn-danger">
+                                            Delete
+                                        </a>
+                                    </td>
                                 </tr>
                             {{/each}}
                         </tbody>
@@ -149,8 +243,8 @@
                 </div>
     
                 <div class="flex m-3">
-                    <a href="/group/{{id}}/events/{{id}}"
-                        class="rounded-xl bg-blue-600 text-white p-3">View</a>
+                    {{!-- <a href="/group/{{id}}/events/{{id}}"
+                        class="rounded-xl bg-blue-600 text-white p-3">View</a> --}}
                     {{#if isOwner}}
                     <a href="/group/{{group.id}}/events/{{id}}/delete" 
                         class="rounded-xl bg-red-600 text-white p-3">Delete</a>

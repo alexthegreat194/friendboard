@@ -1,12 +1,12 @@
 module.exports = {
-    content: ["./views/**/*.hbs", "./views/layouts/**/*.hbs", "./src/**/*.{html,js}"],
+    content: ["./views/**/*.hbs", "./views/layouts/**/*.hbs", "./src/**/*.{html,js}", './node_modules/tw-elements/dist/js/**/*.js'],
     theme: {
       extend: {
-        friendImage: {
-          
-        }
+        
       },
     },
-    plugins: [],
+    plugins: [
+      require('tw-elements/dist/plugin')
+    ]
   }
   

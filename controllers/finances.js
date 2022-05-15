@@ -180,4 +180,40 @@ router.get('/group/:id/shoppinglist/:listId/delete', async (req, res) => {
 
     res.redirect(`/group/${groupId}`)
 });
+
+router.post('/group/:id/goal/new', async (req, res) => {
+    const data = req.body;
+    const groupId = parseInt(req.params.id);
+
+    if (!data.name || !data.cost || !data.description) {
+        console.log('no name or cost or description')
+        return res.redirect(`/group/${groupId}`)
+    }
+
+    // check to see if group exists
+    const group = await prisma.group.findFirst({
+        where: {
+            id: groupId
+        }
+    });
+
+    if (!group) {
+        console.log('no group');
+        return res.redirect('/dashboard');
+    }
+
+    const goal = await prisma.GroupGoal.create({
+        data: {
+            name: data.name,
+            cost: parseInt(data.cost),
+            description: data.description,
+            creatorId: res.locals.currentUser.id,
+            groupId: groupId,
+        }
+    });
+
+    console.log('goal created')
+    res.redirect(`/group/${groupId}`)
+});
+
 module.exports = router;
