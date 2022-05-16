@@ -17,14 +17,12 @@
                 New Shopping List
             </button>
 
-            <button href="" class="btn btn-success" 
+            {{!-- <button href="" class="btn btn-success" 
                 data-bs-toggle="modal" data-bs-target="#goalModal"> 
                 New Group Goal 
-            </button>
+            </button> --}}
         </div>
     </div>
-
-    
 
 
     <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
@@ -156,7 +154,7 @@
     
 {{/with}}
 
-{{#if goals}}
+{{!-- {{#if goals}}
     <h1>Goals</h1>
     <ul>
         {{#each goals}}
@@ -165,57 +163,104 @@
     </ul>
 {{else}}
     <h1>No Goals</h1>
-{{/if}}
+{{/if}} --}}
 
 {{#if shoppingLists}}
-    <div>
-        <h1>Shopping Lists</h1>
+    <div class="">
         <div>
             {{#each shoppingLists}}
-                <div class="w-1/2 border rounded">
-                    <h1>{{name}}</h1>
-                    <a href="/group/{{groupId}}/shoppinglist/{{id}}/delete"
-                        class="btn btn-danger">Delete</a>
-                    <table class="table-auto">
-                        <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Quantity</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each items}}
+                <div class="shadow rounded p-3 m-5">
+                    <div class="flex gap-3 items-center mb-2">
+                        <h1 class="text-2xl font-bold">{{name}}</h1>
+                        <button class="btn btn-danger">
+                            <a href="/group/{{groupId}}/shoppinglist/{{id}}/delete">Delete List</a>
+                        </button>
+                    </div>
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left text-gray-500 ">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                                 <tr>
-                                    <td>{{name}}</td>
-                                    <td>{{quantity}}</td>
-                                    <td class="p-5">
+                                    <th scope="col" class="px-6 py-3">
+                                        Item
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Quantity
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Remove
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each items}}
+                                <tr class="bg-white border-b">
+                                    <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+                                        {{name}}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {{quantity}}
+                                    </td>
+                                    <td class="px-6 py-4">
                                         <a href="/group/{{groupId}}/shoppinglist/{{shoppingListId}}/item/{{id}}/delete"
-                                            class="btn btn-danger">
-                                            Delete
+                                            class=" btn btn-danger">
+                                            Remove
                                         </a>
                                     </td>
                                 </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <form action="/group/{{group.id}}/shoppinglist/{{id}}/item/new" method="post"
-                        class="flex flex-col gap-4 p-5">
-                        <div class="flex flex-col">
-                            <label for="name"
-                                class="">Name</label>
-                            <input type="text" name="name" id="name"
-                                class="border rounded p-1" />
+                                {{/each}}
+                                <tr>
+                                    <td colspan="3">
+                                        <button class="btn btn-primary shadow-none border-none w-full"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#shoppingListModal{{id}}"
+                                            data-bs-dismiss="modal">
+                                            Add Item
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+                    id="shoppingListModal{{id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog relative w-auto pointer-events-none">
+                            <div
+                            class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+                                <div
+                                    class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                                    <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">
+                                        New Item
+                                    </h5>
+                                    <button type="button"
+                                    class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body relative p-4">
+                                    <form action="/group/{{group.id}}/shoppinglist/{{id}}/item/new" method="post"
+                                        class="flex flex-col gap-4 p-5">
+                                        <div class="flex flex-col">
+                                            <label for="name"
+                                                class="">Name</label>
+                                            <input type="text" name="name" id="name"
+                                                class="border rounded p-1" />
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <label for="amount"
+                                                class="">Amount</label>
+                                            <input type="number" name="amount" id="amount"
+                                                class="border rounded p-1" />
+                                        </div>
+                                        <input type="submit" value="Submit"
+                                            class="btn btn-success">
+                                    </form>
+                                </div>
+                                
+                            </div>
                         </div>
-                        <div class="flex flex-col">
-                            <label for="amount"
-                                class="">Amount</label>
-                            <input type="number" name="amount" id="amount"
-                                class="border rounded p-1" />
-                        </div>
-                        <input type="submit" value="Submit"
-                            class="btn btn-success">
-                    </form>
+                    </div>
+
                 </div>
             {{/each}}
         </div>
@@ -226,37 +271,57 @@
 
 {{#if events}}
 
-    events
     <div class="grid grid-rows-2">
         {{#each events}}
-            <div class="border rounded p-3">
-                <h1 class="text-xl font-bold">{{name}}</h1>
-                <h3 class="text-md font-light">{{description}}</h3>
-                <h3 class="text-md font-light">{{date}}</h3>
-                <h3>Creator: {{creator.profile.name}}</h3>
-    
-                <div class="">
-                    <h1>people attending:</h1>
-                    {{#each profiles}}
-                        <h3>{{name}}</h3>                    
-                    {{/each}}
-                </div>
+
+            <div class="shadow rounded-xl p-3 m-2">
+                <h1 class="text-3xl font-bold text-gray-900">{{name}}</h1>
+                <h3 class="text-lg font-normal text-gray-600 mb-2">{{description}}</h3>
+                <h3 class="font-light text-xs text-gray-400">Created by <span class="font-bold">{{creator.profile.name}}</span></h3>
+                <h3 class="text-xs font-light text-gray-400">{{date}}</h3>
     
                 <div class="flex m-3">
                     {{!-- <a href="/group/{{id}}/events/{{id}}"
                         class="rounded-xl bg-blue-600 text-white p-3">View</a> --}}
                     {{#if isOwner}}
                     <a href="/group/{{group.id}}/events/{{id}}/delete" 
-                        class="rounded-xl bg-red-600 text-white p-3">Delete</a>
+                        class="btn btn-danger">Delete</a>
                     {{else}}
                         {{#if isAttending}}
                             <a href="/group/{{group.id}}/events/{{id}}/leave" 
-                                class="rounded-xl bg-red-600 text-white p-3">Leave</a>
+                                class="btn btn-danger">Leave</a>
                         {{else}}
                             <a href="/group/{{group.id}}/events/{{id}}/join" 
-                                class="rounded-xl bg-blue-600 text-white p-3">Join</a>
+                                class="btn btn-success">Join</a>
                         {{/if}}
                     {{/if}}
+                </div>
+
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500 ">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Name
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Pronouns
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each profiles}}
+                                <tr class="bg-white border-b ">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        {{name}}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {{pronouns}}
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         {{/each}}
